@@ -1,5 +1,13 @@
 #define SCREEN_WIDTH 500
 #define SCREEN_HEIGHT 400
+#include <GLUT/glut.h>
+
+//Globals
+vector <Rect> Cars;
+vector <Rect> Logs;
+vector <Rect> Frogs;
+int count = 0;
+float red = 0;
 
 class Rect
 {
@@ -25,33 +33,67 @@ public:
 
 };
 
-void init(vector <Rect> Cars, vector <Rect> Logs,vector <Rect> Frogs)
+void init()
 {
-    Rect Car0=Rect(SCREEN_WIDTH,SCREEN_HEIGHT,5,244,208,63,4,4);
-    Rect Car1=Rect(SCREEN_WIDTH,SCREEN_HEIGHT,8,155,89,182,4,4);
+   Rect Car0=Rect(SCREEN_WIDTH,SCREEN_HEIGHT,5,244,208,63,4,4);
+   Rect Car1=Rect(SCREEN_WIDTH,SCREEN_HEIGHT,8,155,89,182,4,4);
 
-    Cars.push_back(Car0);
-    Cars.push_back(Car1);
+   Cars.push_back(Car0);
+   Cars.push_back(Car1);
 
-    Rect Log0=Rect(SCREEN_WIDTH,SCREEN_HEIGHT,5,255,248,220,10,3);
-    Rect Log1=Rect(SCREEN_WIDTH,SCREEN_HEIGHT,5,255,248,220,10,3);
-    Rect Log2=Rect(SCREEN_WIDTH,SCREEN_HEIGHT,5,255,248,220,10,3);
+   Rect Log0=Rect(SCREEN_WIDTH,SCREEN_HEIGHT,5,255,248,220,10,3);
+   Rect Log1=Rect(SCREEN_WIDTH,SCREEN_HEIGHT,5,255,248,220,10,3);
+   Rect Log2=Rect(SCREEN_WIDTH,SCREEN_HEIGHT,5,255,248,220,10,3);
 
-    Rect LogGoal0=Rect(SCREEN_WIDTH,SCREEN_HEIGHT,0,255,255,255,4,4);
-    Rect LogGoal1=Rect(SCREEN_WIDTH,SCREEN_HEIGHT,0,255,255,255,4,4);
-    Rect LogGoal2=Rect(SCREEN_WIDTH,SCREEN_HEIGHT,0,255,255,255,4,4);
+   Rect LogGoal0=Rect(SCREEN_WIDTH,SCREEN_HEIGHT,0,255,255,255,4,4);
+   Rect LogGoal1=Rect(SCREEN_WIDTH,SCREEN_HEIGHT,0,255,255,255,4,4);
+   Rect LogGoal2=Rect(SCREEN_WIDTH,SCREEN_HEIGHT,0,255,255,255,4,4);
 
-    Logs.push_back(Log0);
-    Logs.push_back(Log1);
-    Logs.push_back(Log2);
+   Logs.push_back(Log0);
+   Logs.push_back(Log1);
+   Logs.push_back(Log2);
 
-    Rect Frog=Rect(SCREEN_WIDTH,/*lower portion of screen height*/,0,0,255,0,3,3);
+   Rect Frog=Rect(SCREEN_WIDTH,/*lower portion of screen height*/,0,0,255,0,3,3);
 
-    Frogs.push_back(Frog);
+   Frogs.push_back(Frog);
 
 }
 
-int main()
+
+void idlefunc() {
+   count++;
+   if (count == 1000) {
+      //if (abs(red-1)) 
+         red = red + .01;
+         count = 0;
+      glutPostRedisplay();
+   }
+}
+
+void displayMe(void)
 {
- return 0;
+    glClear(GL_COLOR_BUFFER_BIT);
+    glColor3f(red, 0.0, 0.0);
+    glBegin(GL_POLYGON);
+        glVertex3f(0.0, 0.0, 0.0);
+        glVertex3f(0.5, 0.0, 0.0);
+        glVertex3f(0.5, 0.5, 0.0);
+        glVertex3f(0.0, 0.5, 0.0);
+    glEnd();
+    glutSwapBuffers();
+
+    
+}
+
+int main(int argc, char** argv)
+{
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
+    glutInitWindowSize(300, 300);
+    glutInitWindowPosition(100, 100);
+    glutCreateWindow("Frogger :D");
+    glutDisplayFunc(displayMe);
+    glutIdleFunc(idlefunc);
+    glutMainLoop();
+    return 0;
 }

@@ -35,15 +35,15 @@ public:
 
 void init()
 {
-   Rect Car0=Rect(SCREEN_WIDTH,SCREEN_HEIGHT,5,244,208,63,4,4);
-   Rect Car1=Rect(SCREEN_WIDTH,SCREEN_HEIGHT,8,155,89,182,4,4);
+   Rect Car0=Rect(SCREEN_WIDTH/4,SCREEN_HEIGHT/4,5,244,208,63,4,4);
+   Rect Car1=Rect(SCREEN_WIDTH/2,SCREEN_HEIGHT/2,8,155,89,182,4,4);
 
    Cars.push_back(Car0);
    Cars.push_back(Car1);
 
-   Rect Log0=Rect(SCREEN_WIDTH,SCREEN_HEIGHT,5,255,248,220,10,3);
-   Rect Log1=Rect(SCREEN_WIDTH,SCREEN_HEIGHT,5,255,248,220,10,3);
-   Rect Log2=Rect(SCREEN_WIDTH,SCREEN_HEIGHT,5,255,248,220,10,3);
+   Rect Log0=Rect(SCREEN_WIDTH/2,SCREEN_HEIGHT/4,5,255,248,220,10,3);
+   Rect Log1=Rect(SCREEN_WIDTH*3/4,SCREEN_HEIGHT/4,5,255,248,220,10,3);
+   Rect Log2=Rect(SCREEN_WIDTH/2,SCREEN_HEIGHT*3/4,5,255,248,220,10,3);
 
    Rect LogGoal0=Rect(SCREEN_WIDTH,SCREEN_HEIGHT,0,255,255,255,4,4);
    Rect LogGoal1=Rect(SCREEN_WIDTH,SCREEN_HEIGHT,0,255,255,255,4,4);
@@ -53,7 +53,7 @@ void init()
    Logs.push_back(Log1);
    Logs.push_back(Log2);
 
-   Rect Frog=Rect(SCREEN_WIDTH,/*lower portion of screen height*/,0,0,255,0,3,3);
+   Rect Frog=Rect(SCREEN_WIDTH/2,SCREEN_HEIGHT - 50,0,0,255,0,3,3);
 
    Frogs.push_back(Frog);
 
@@ -89,7 +89,7 @@ int main(int argc, char** argv)
 {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
-    glutInitWindowSize(300, 300);
+    glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
     glutInitWindowPosition(100, 100);
     glutCreateWindow("Frogger :D");
     glutDisplayFunc(displayMe);

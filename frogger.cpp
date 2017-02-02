@@ -33,14 +33,14 @@ public:
 };
 
 //Globals
-vector <Rect> Cars;
-vector <Rect> Logs;
-Rect Frog;
+vector <Rect> cars;
+vector <Rect> logs;
+Rect frog;
 int count = 0;
 float red = 0;
 float w = 1.0/SCREEN_WIDTH;
 float h = 1.0/SCREEN_HEIGHT;
-float c = 1.0/255;
+float c = 1.0/<p></p>255;
 
 
 void init()
@@ -90,7 +90,7 @@ void displayMe(void)
 {
    glClear(GL_COLOR_BUFFER_BIT);
    glColor3f(red, 0.0, 0.0);
-   for (auto car:Cars) {
+   for (auto car:cars) {
       glBegin(GL_POLYGON);
          glVertex2f(car.x*w, car.y*h);
          glVertex2f(car.x*w+car.width*w, car.y*h);

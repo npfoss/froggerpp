@@ -5,15 +5,15 @@
 //Globals
 vector <Rect> Cars;
 vector <Rect> Logs;
-vector <Rect> Frogs;
+Rect Frog;
 int count = 0;
 float red = 0;
 
 class Rect
 {
 public:
-  int xLocation;
-  int yLocation;
+  int x;
+  int y;
   int dx;
   int r, g, b;
   int width;
@@ -21,8 +21,8 @@ public:
 
   Rect(xLocation,yLocation,dx,r,g,b,width,height)
   {
-    this->xLocation=xLocation;
-    this->yLocation=yLocation;
+    this->x=xLocation;
+    this->y=yLocation;
     this->dx=dx;
     this->r=r;
     this->g=g;
@@ -53,10 +53,7 @@ void init()
    Logs.push_back(Log1);
    Logs.push_back(Log2);
 
-   Rect Frog=Rect(SCREEN_WIDTH/2,SCREEN_HEIGHT - 50,0,0,255,0,3,3);
-
-   Frogs.push_back(Frog);
-
+   Frog=Rect(SCREEN_WIDTH/2,SCREEN_HEIGHT - 50,0,0,255,0,3,3);
 }
 
 

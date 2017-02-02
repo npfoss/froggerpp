@@ -72,15 +72,17 @@ void idlefunc() {
 
 void displayMe(void)
 {
-    glClear(GL_COLOR_BUFFER_BIT);
-    glColor3f(red, 0.0, 0.0);
-    glBegin(GL_POLYGON);
-        glVertex3f(0.0, 0.0, 0.0);
-        glVertex3f(0.5, 0.0, 0.0);
-        glVertex3f(0.5, 0.5, 0.0);
-        glVertex3f(0.0, 0.5, 0.0);
-    glEnd();
-    glutSwapBuffers();
+   glClear(GL_COLOR_BUFFER_BIT);
+   glColor3f(red, 0.0, 0.0);
+   for (auto car:Cars) {
+      glBegin(GL_POLYGON);
+      glVertex3f(1.0, 0.0, 0.0);
+      glVertex3f(0.5, 0.0, 0.0);
+      glVertex3f(0.5, 0.5, 0.0);
+      glVertex3f(0.0, 0.5, 0.0);
+      glEnd();
+   }
+   glutSwapBuffers();
 
     
 }

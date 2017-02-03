@@ -65,6 +65,8 @@ float red = 0;
 float w = 1.0/SCREEN_WIDTH;
 float h = 1.0/SCREEN_HEIGHT;
 float c = 1.0/255;
+char key_press;
+int ascii_value;
 bool up_pressed, down_pressed, left_pressed, right_pressed = false;
 
 void init()
@@ -103,6 +105,40 @@ void init()
   resetFrog();
 }
 
+void keyfunc(unsigned char key,int xscr,int yscr) {
+   switch(key){
+      case 'w':
+         up_pressed =  true;
+         break;
+      case 's':
+         down_pressed =  true;
+         break;
+      case 'a':
+        left_pressed = true;
+        break;
+      case 'd':
+        right_pressed = true;
+        break;
+   }
+}
+
+void keyupfunc(unsigned char key,int xscr,int yscr) {
+   switch(key){
+      case 'w':
+         up_pressed =  false;
+         break;
+      case 's':
+         down_pressed = false;
+         break;
+      case 'a':
+        left_pressed = false;
+        break;
+      case 'd':
+        right_pressed = false;
+        break;
+   }
+}
+
 void resetFrog(){
   // TODO: start frog at the bottom in the middle
   frog.y = SCREEN_HEIGHT - 5 - RECT_HEIGHT;
@@ -119,6 +155,8 @@ bool frogOnLogs(){
 }
 
 void idlefunc() {
+  key_press=getch();
+  ascii_value=key_press;
   count++;
   if (count == DELAY) {
     count = 0;
@@ -224,6 +262,8 @@ int main(int argc, char** argv)
     glutCreateWindow("Frogger :D");
     glutDisplayFunc(displayMe);
     glutIdleFunc(idlefunc);
+    glutKeyboardFunc(keyfunc);
+    glutKeyboardUpFunc(keyupfunc);
     glutMainLoop();
     return 0;
 }

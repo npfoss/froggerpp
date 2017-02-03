@@ -10,7 +10,7 @@
 8--------cars------------
 9--------grass-----------
 */
-
+//#include <iostream>
 #include <GLUT/glut.h>
 #include <GLUT/glut.h>
 #include <vector>
@@ -20,8 +20,8 @@ using namespace std;
 #define SCREEN_HEIGHT 400
 #define LANE_HEIGHT 40
 #define RECT_HEIGHT 30
+//#define DELAY_CNT 100000;
 #define JUMP_DIST 40
-#define DELAY 100000;
 
 class Rect
 {
@@ -60,14 +60,19 @@ public:
 vector <Rect> cars;
 vector <Rect> logs;
 Rect frog;
-int count = 0;
-float red = 0;
-float w = 1.0/SCREEN_WIDTH;
-float h = 1.0/SCREEN_HEIGHT;
+int cnt = 0;
+float w = 2.0/SCREEN_WIDTH;
+float h = 2.0/SCREEN_HEIGHT;
 float c = 1.0/255;
 char key_press;
 int ascii_value;
 bool up_pressed, down_pressed, left_pressed, right_pressed = false;
+
+void resetFrog(){
+  // TODO: start frog at the bottom in the middle
+  frog.y = SCREEN_HEIGHT - 5 - RECT_HEIGHT;
+  frog.x = SCREEN_HEIGHT / 2 - RECT_HEIGHT / 2;
+}
 
 void init()
 {
@@ -155,12 +160,9 @@ bool frogOnLogs(){
 }
 
 void idlefunc() {
-  key_press=getch();
-  ascii_value=key_press;
-  count++;
-  if (count == DELAY) {
-    count = 0;
-    red = red + .01;
+  cnt++;
+  if (cnt == 1000) {
+    cnt = 0;
 
     // move everything
     for(auto car : cars){
@@ -184,31 +186,21 @@ void idlefunc() {
       frog.x += JUMP_DIST;
     }
 
-    // TODO: check if frog made it across
-    if (collidesWith(frog,logs(4)))
+    if (frog.y<LANE_HEIGHT)
+    { 
+      for (int n=0;n<logs.size();n++)
     {
-        logs(4).r=0;
-        logs(4).g=255;
-        logs(4).b=0;
-        frog.x=SCREEN_WIDTH/2;
-        frog.y=SCREEN_HEIGHT*1/10;
+      if (frog.collidesWith(logs[n]))
+     {
+        logs[n].r=0;
+        logs[n].g=255;
+        logs[n].b=0;
+        resetFrog();
+     }
     }
-    if (collidesWith(frog,logs(5)))
-    {
-        logs(5).r=0;
-        logs(5).g=255;
-        logs(5).b=0;
-        frog.x=SCREEN_WIDTH/2;
-        frog.y=SCREEN_HEIGHT*1/10;
     }
-    if (collidesWith(frog,logs(6)))
-    {
-        logs(6).r=0;
-        logs(6).g=255;
-        logs(6).b=0;
-        frog.x=SCREEN_WIDTH/2;
-        frog.y=SCREEN_HEIGHT*1/10;
-    }
+
+
 
     // check if frog dies
     if(frog.x > 5*LANE_HEIGHT){
@@ -234,12 +226,72 @@ void idlefunc() {
 void fillBackground(){
   glClear(GL_COLOR_BUFFER_BIT);
   // eventually have a road texture, water texture, etc
+   // grass on top
+   glColor3f(0.0, 153*c, 0.0);
+   glBegin(GL_POLYGON);
+     glVertex3f(-1.0, 1.0, 0.0);
+     glVertex3f(-1.0, 1-LANE_HEIGHT*h, 0.0);
+     glVertex3f(1.0,1-LANE_HEIGHT*h, 0.0);
+     glVertex3f(1.0, 1.0, 0.0);
+   glEnd();
+
+   //water
+   glColor3f(0.0, 0.0, 1.0);
+   glBegin(GL_POLYGON);
+     glVertex3f(-1.0, 1-LANE_HEIGHT*h, 0.0);
+     glVertex3f(-1.0, 1-5*LANE_HEIGHT*h, 0.0);
+     glVertex3f(1.0,1-5*LANE_HEIGHT*h, 0.0);
+     glVertex3f(1.0, 1-LANE_HEIGHT*h, 0.0);
+   glEnd();
+
+   //middle grass
+   glColor3f(0.0, 153*c, 0.0);
+   glBegin(GL_POLYGON);
+     glVertex3f(-1.0, 1-5*LANE_HEIGHT*h, 0.0);
+     glVertex3f(-1.0, 1-6*LANE_HEIGHT*h, 0.0);
+     glVertex3f(1.0,1-6*LANE_HEIGHT*h, 0.0);
+     glVertex3f(1.0, 1-5*LANE_HEIGHT*h, 0.0);
+   glEnd();
+
+   //road lines
+   glColor3f(1.0, 1.0, 0.0);
+   glBegin(GL_POLYGON);
+     glVertex3f(-1.0, 1.005-7*LANE_HEIGHT*h, 0.0);
+     glVertex3f(-1.0, 0.995-7*LANE_HEIGHT*h, 0.0);
+     glVertex3f(1.0, 0.995-7*LANE_HEIGHT*h, 0.0);
+     glVertex3f(1.0, 1.005-7*LANE_HEIGHT*h, 0.0);
+   glEnd();
+   glColor3f(1.0, 1.0, 0.0);
+   glBegin(GL_POLYGON);
+     glVertex3f(-1.0, 1.005-8*LANE_HEIGHT*h, 0.0);
+     glVertex3f(-1.0, 0.995-8*LANE_HEIGHT*h, 0.0);
+     glVertex3f(1.0, 0.995-8*LANE_HEIGHT*h, 0.0);
+     glVertex3f(1.0, 1.005-8*LANE_HEIGHT*h, 0.0);
+   glEnd();
+   glColor3f(1.0, 1.0, 0.0);
+   glBegin(GL_POLYGON);
+     glVertex3f(-1.0, 1.005-8*LANE_HEIGHT*h, 0.0);
+     glVertex3f(-1.0, 0.995-8*LANE_HEIGHT*h, 0.0);
+     glVertex3f(1.0, 0.995-8*LANE_HEIGHT*h, 0.0);
+     glVertex3f(1.0, 1.005-8*LANE_HEIGHT*h, 0.0);
+   glEnd();
+
+   //grass on bottom
+   glColor3f(0.0, 153*c, 0.0);
+   glBegin(GL_POLYGON);
+     glVertex3f(-1.0, -1.0, 0.0);
+     glVertex3f(-1.0, -1+LANE_HEIGHT*h, 0.0);
+     glVertex3f(1.0,-1+LANE_HEIGHT*h, 0.0);
+     glVertex3f(1.0, -1.0, 0.0);
+   glEnd();   
 }
+
 void displayMe(void)
 {
    fillBackground();
-   glColor3f(red, 0.0, 0.0);
+   
    for (auto car:cars) {
+      glColor3f(car.r, car.g, car.b);
       glBegin(GL_POLYGON);
          glVertex2f(car.x*w, car.y*h);
          glVertex2f(car.x*w+car.width*w, car.y*h);
@@ -248,12 +300,22 @@ void displayMe(void)
       glEnd();
    }
 
+   for (auto alog:logs) {
+      glColor3f(alog.r, alog.g, alog.b);
+      glBegin(GL_POLYGON);
+         glVertex2f(alog.x*w, alog.y*h);
+         glVertex2f(alog.x*w+alog.width*w, alog.y*h);
+         glVertex2f(alog.x*w+alog.width*w, alog.y*h+alog.height*h);
+         glVertex2f(alog.x*w, alog.y*h+alog.height*h);
+      glEnd();
+   }
+
    // always last
    glutSwapBuffers();
 }
 
 int main(int argc, char** argv)
-{
+{   
     init();
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);

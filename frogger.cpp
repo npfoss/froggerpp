@@ -20,7 +20,7 @@ using namespace std;
 #define SCREEN_HEIGHT 400
 #define LANE_HEIGHT 40
 #define RECT_HEIGHT 30
-#define JUMP_DIST 5
+#define JUMP_DIST 40
 #define DELAY 100000;
 
 class Rect
@@ -52,7 +52,7 @@ public:
   }
 
   bool collidesWith(Rect rect){
-    return (this->x + this->width < rect.x || this->y + this->height < rect.y || rect.x + rect.width < this->x || rect.y + rect.height < this->y)
+    return (this->x + this->width < rect.x || this->y + this->height < rect.y || rect.x + rect.width < this->x || rect.y + rect.height < this->y);
   }
 };
 
@@ -102,7 +102,17 @@ void init()
 
 void resetFrog(){
   // TODO: start frog at the bottom in the middle
-  frog=Rect(SCREEN_WIDTH/2,SCREEN_HEIGHT - 50,0,0*c,255*c,0*c,3,3);
+  frog.y = SCREEN_HEIGHT - 5 - RECT_HEIGHT;
+  frog.x = SCREEN_HEIGHT / 2 - RECT_HEIGHT / 2;
+}
+
+bool frogOnLogs(){
+  for(auto car : logs){
+    if(frog.collidesWith(car)){
+      return true;
+    }
+  }
+  return false;
 }
 
 void idlefunc() {
@@ -136,17 +146,19 @@ void idlefunc() {
     // TODO: check if frog made it across
 
 
-    // check for collisions
-    for(auto car : cars){
-      if(frog.collidesWith(car)){
-        // ded
-        resetFrog();
+    // check if frog dies
+    if(frog.x > 5*LANE_HEIGHT){
+      // watch out for cars
+      for(auto car : cars){
+        if(frog.collidesWith(car)){
+          // ded
+          resetFrog();
+        }
       }
-    }
-
-    for(auto car : logs){
-      if(frog.collidesWith(car)){
-        // ded
+    } else {
+      // make sure on logs
+      if(!frogOnLogs()){
+        //ded
         resetFrog();
       }
     }

@@ -52,7 +52,7 @@ public:
   }
 
   bool collidesWith(Rect rect){
-    return (this->x + this->width < rect.x || this->y + this->height < rect.y || rect.x + rect.width < this->x || rect.y + rect.height < this->y);
+    return !(this->x + this->width < rect.x || this->y + this->height < rect.y || rect.x + rect.width < this->x || rect.y + rect.height < this->y);
   }
 };
 
@@ -81,19 +81,20 @@ void init()
     // y = r * LANE_HEIGHT + (LANE_HEIGHT - RECT_HEIGHT) / 2
 
 
+  Rect Car0=Rect(SCREEN_WIDTH-30,SCREEN_HEIGHT*8/10+5,-5,244*c,208*c,63*c,RECT_HEIGHT,RECT_HEIGHT);
+  Rect Car1=Rect(0,SCREEN_HEIGHT*7/10+5,6,155*c,89*c,182*c,3*RECT_HEIGHT,RECT_HEIGHT);
+  Rect Car2=Rect(SCREEN_WIDTH-30,SCREEN_HEIGHT*6/20+5,-9,240*c,8*c,240*c,RECT_HEIGHT,RECT_HEIGHT);
 
-  Rect Car0=Rect(SCREEN_WIDTH-30,SCREEN_HEIGHT*8/10,-5,244*c,208*c,63*c,RECT_HEIGHT,RECT_HEIGHT);
-  Rect Car1=Rect(0,SCREEN_HEIGHT*7/10,6,155*c,89*c,182*c,RECT_HEIGHT,RECT_HEIGHT);
-  Rect Car2=Rect(SCREEN_WIDTH-30,SCREEN_HEIGHT*6/20,-9,240*c,8*c,160*c,RECT_HEIGHT,RECT_HEIGHT);
 
   cars.push_back(Car0);
   cars.push_back(Car1);
   cars.push_back(Car2);
 
-  Rect Log0=Rect(SCREEN_WIDTH-30,SCREEN_HEIGHT*1/10,5,255*c,248*c,220*c,3*RECT_HEIGHT,RECT_HEIGHT);
-  Rect Log1=Rect(0,SCREEN_HEIGHT*2/10,5,255*c,248*c,220*c,2*LANE_HEIGHT,RECT_HEIGHT);
-  Rect Log2=Rect(SCREEN_WIDTH-30,SCREEN_HEIGHT*3/10,5,255*c,248*c,220*c,4*RECT_HEIGHT,RECT_HEIGHT);
-  Rect Log3=Rect(0,SCREEN_HEIGHT*4/10,5,255*c,248*c,220*c,3*LANE_HEIGHT,RECT_HEIGHT);
+
+  Rect Log0=Rect(SCREEN_WIDTH-30,SCREEN_HEIGHT*1/10+5,5,204*c,233*c,82*c,3*RECT_HEIGHT,RECT_HEIGHT);
+  Rect Log1=Rect(0,SCREEN_HEIGHT*2/10,5,204*c,233*c,82*c,LANE_HEIGHT*2,RECT_HEIGHT);
+  Rect Log2=Rect(SCREEN_WIDTH-30,SCREEN_HEIGHT*3/10+5,5,204*c,233*c,82*c,4*RECT_HEIGHT,RECT_HEIGHT);
+  Rect Log3=Rect(0,SCREEN_HEIGHT*4/10,5,204*c,233*c,82*c,LANE_HEIGHT*3,RECT_HEIGHT);
 
   Rect LogGoal4=Rect(SCREEN_WIDTH*3/10,0,0,255*c,255*c,255*c,1.5*RECT_HEIGHT,RECT_HEIGHT);
   Rect LogGoal5=Rect(SCREEN_WIDTH/2,0,0,255*c,255*c,255*c,1.5*RECT_HEIGHT,RECT_HEIGHT);
@@ -162,12 +163,16 @@ void idlefunc() {
 
     // move everything
     for(auto car : cars){
-      car.x = car.x + car.dx;
+      car.x = 200;//car.x + car.dx;
+      // cout << "car at " << car.x << " " << car.y << endl;
     }
 
-    for(auto loog : logs){
-      loog.x += loog.dx;
+    for(auto car : logs){
+      car.x = car.x + car.dx;
+      // cout << "log at " << car.x << " " << car.y << endl;
     }
+
+      // cout << "frog at " << frog.x << " " << frog.y << endl;
 
     if (up_pressed){
       frog.y -= JUMP_DIST;

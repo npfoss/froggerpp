@@ -82,16 +82,16 @@ void init()
 
   Rect Car0=Rect(SCREEN_WIDTH-30,SCREEN_HEIGHT*8/10+5,-5,244*c,208*c,63*c,RECT_HEIGHT,RECT_HEIGHT);
   Rect Car1=Rect(0,SCREEN_HEIGHT*7/10+5,6,155*c,89*c,182*c,3*RECT_HEIGHT,RECT_HEIGHT);
-  Rect Car2=Rect(SCREEN_WIDTH-30,SCREEN_HEIGHT*6/20+5,-9,155*c,89*c,182*c,RECT_HEIGHT,RECT_HEIGHT);
+  Rect Car2=Rect(SCREEN_WIDTH-30,SCREEN_HEIGHT*6/10+5,-9,155*c,89*c,182*c,RECT_HEIGHT,RECT_HEIGHT);
 
   cars.push_back(Car0);
   cars.push_back(Car1);
   cars.push_back(Car2);
 
-  Rect Log0=Rect(SCREEN_WIDTH-30,SCREEN_HEIGHT*1/10+5,5,255*c,248*c,220*c,3*RECT_HEIGHT,RECT_HEIGHT);
-  Rect Log1=Rect(0,SCREEN_HEIGHT*2/10,5,255*c,248*c,220*c,LANE_HEIGHT*2,RECT_HEIGHT);
-  Rect Log2=Rect(SCREEN_WIDTH-30,SCREEN_HEIGHT*3/10+5,5,255*c,248*c,220*c,4*RECT_HEIGHT,RECT_HEIGHT);
-  Rect Log3=Rect(0,SCREEN_HEIGHT*4/10,5,255*c,248*c,220*c,LANE_HEIGHT*3,RECT_HEIGHT);
+  Rect Log0=Rect(SCREEN_WIDTH-30,SCREEN_HEIGHT*1/10+5,-5,204*c,233*c,82*c,3*RECT_HEIGHT,RECT_HEIGHT);
+  Rect Log1=Rect(0,SCREEN_HEIGHT*2/10,7,204*c,233*c,82*c,LANE_HEIGHT*2,RECT_HEIGHT);
+  Rect Log2=Rect(SCREEN_WIDTH-30,SCREEN_HEIGHT*3/10+5,-3,204*c,233*c,82*c,4*RECT_HEIGHT,RECT_HEIGHT);
+  Rect Log3=Rect(0,SCREEN_HEIGHT*4/10,5,204*c,233*c,82*c,LANE_HEIGHT*3,RECT_HEIGHT);
 
   Rect LogGoal4=Rect(SCREEN_WIDTH*3/10,0,0,255*c,255*c,255*c,1.5*RECT_HEIGHT,RECT_HEIGHT);
   Rect LogGoal5=Rect(SCREEN_WIDTH/2,0,0,255*c,255*c,255*c,1.5*RECT_HEIGHT,RECT_HEIGHT);
@@ -159,14 +159,14 @@ void idlefunc() {
     cnt = 0;
 
     // move everything
-    for(auto car : cars){
-      car.x = 200;//car.x + car.dx;
-      // cout << "car at " << car.x << " " << car.y << endl;
+    for(int i = 0; i < cars.size(); i++){
+      cars[i].x += cars[i].dx;//car.x + car.dx;
+      // cout << "car at " << cars[i].x << " " << cars[i].y << endl;
     }
 
-    for(auto car : logs){
-      car.x = car.x + car.dx;
-      // cout << "log at " << car.x << " " << car.y << endl;
+    for(int i = 0; i < logs.size(); i++){
+      logs[i].x = logs[i].x + logs[i].dx;
+      // cout << "log at " << cars[i].x << " " << cars[i].y << endl;
     }
 
       // cout << "frog at " << frog.x << " " << frog.y << endl;
@@ -205,7 +205,7 @@ void idlefunc() {
       for(auto car : cars){
         if(frog.collidesWith(car)){
           // ded
-      cout << "here" << endl;
+      // cout << "here" << endl;
           resetFrog();
         }
       }
@@ -222,11 +222,27 @@ void idlefunc() {
     {
       if (cars[n].dx<0&&cars[n].x<-cars[n].width)
       {
+         cout << "flag 1" << endl;
         cars[n].x=SCREEN_WIDTH;
       }
       else if (cars[n].dx>0&&cars[n].x>=SCREEN_WIDTH)
       {
+                  cout << "flag 2" << endl;
         cars[n].x=-cars[n].width;
+      }
+    }
+
+    for (int n=0;n<logs.size();n++)
+    {
+      if (logs[n].dx<0&&logs[n].x<-logs[n].width)
+      {
+         cout << "flag 1" << endl;
+        logs[n].x=SCREEN_WIDTH;
+      }
+      else if (logs[n].dx>0&&logs[n].x>=SCREEN_WIDTH)
+      {
+                  cout << "flag 2" << endl;
+        logs[n].x=-logs[n].width;
       }
     }
 

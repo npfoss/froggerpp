@@ -64,7 +64,7 @@ int count = 0;
 float red = 0;
 float w = 1.0/SCREEN_WIDTH;
 float h = 1.0/SCREEN_HEIGHT;
-float c = 1.0/<p></p>255;
+float c = 1.0/255;
 bool up_pressed, down_pressed, left_pressed, right_pressed = false;
 
 void init()

@@ -75,27 +75,30 @@ void init()
 
 
 
-  Rect Car0=Rect(SCREEN_WIDTH/4,SCREEN_HEIGHT/4,5,244*c,208*c,63*c,4,RECT_HEIGHT);
-
-
-
-
-  Rect Car1=Rect(SCREEN_WIDTH/2,SCREEN_HEIGHT/2,8,155*c,89*c,182*c,4,4);
+  Rect Car0=Rect(SCREEN_WIDTH,SCREEN_HEIGHT*3/10,-5,244*c,208*c,63*c,LANE_HEIGHT,LANE_HEIGHT);
+  Rect Car1=Rect(0,SCREEN_HEIGHT*4/20,6,155*c,89*c,182*c,LANE_HEIGHT,LANE_HEIGHT);
+  Rect Car2=Rect(SCREEN_WIDTH,SCREEN_HEIGHT*5/20,-9,155*c,89*c,182*c,LANE_HEIGHT,LANE_HEIGHT);
 
   cars.push_back(Car0);
   cars.push_back(Car1);
+  cars.push_back(Car2);
 
-  Rect Log0=Rect(SCREEN_WIDTH/2,SCREEN_HEIGHT/4,5,255*c,248*c,220*c,10,3);
-  Rect Log1=Rect(SCREEN_WIDTH*3/4,SCREEN_HEIGHT/4,5,255*c,248*c,220*c,10,3);
-  Rect Log2=Rect(SCREEN_WIDTH/2,SCREEN_HEIGHT*3/4,5,255*c,248*c,220*c,10,3);
+  Rect Log0=Rect(SCREEN_WIDTH,SCREEN_HEIGHT*9/10,5,255*c,248*c,220*c,3*LANE_HEIGHT,LANE_HEIGHT);
+  Rect Log1=Rect(0,SCREEN_HEIGHT*8/10,5,255*c,248*c,220*c,LANE_HEIGHT,2*LANE_HEIGHT);
+  Rect Log2=Rect(SCREEN_WIDTH,SCREEN_HEIGHT*7/10,5,255*c,248*c,220*c,4*LANE_HEIGHT,LANE_HEIGHT);
+  Rect Log3=Rect(0,SCREEN_HEIGHT*6/10,5,255*c,248*c,220*c,LANE_HEIGHT,3*LANE_HEIGHT);
 
-  Rect LogGoal0=Rect(SCREEN_WIDTH,SCREEN_HEIGHT,0,255*c,255*c,255*c,4,4);
-  Rect LogGoal1=Rect(SCREEN_WIDTH,SCREEN_HEIGHT,0,255*c,255*c,255*c,4,4);
-  Rect LogGoal2=Rect(SCREEN_WIDTH,SCREEN_HEIGHT,0,255*c,255*c,255*c,4,4);
+  Rect LogGoal0=Rect(SCREEN_WIDTH/4,SCREEN_HEIGHT,0,255*c,255*c,255*c,1.5*LANE_HEIGHT,LANE_HEIGHT);
+  Rect LogGoal1=Rect(SCREEN_WIDTH/2,SCREEN_HEIGHT,0,255*c,255*c,255*c,1.5*LANE_HEIGHT,LANE_HEIGHT);
+  Rect LogGoal2=Rect(SCREEN_WIDTH*3/4,SCREEN_HEIGHT,0,255*c,255*c,255*c,1.5*LANE_HEIGHT,LANE_HEIGHT);
 
   logs.push_back(Log0);
   logs.push_back(Log1);
   logs.push_back(Log2);
+  logs.push_back(Log3);
+  logs.push_back(LogGoal0);
+  logs.push_back(LogGoal1);
+  logs.push_back(LogGoal2);
 
   resetFrog();
 }

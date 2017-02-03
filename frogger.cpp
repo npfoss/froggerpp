@@ -10,7 +10,7 @@
 8--------cars------------
 9--------grass-----------
 */
-#include <iostream>
+//#include <iostream>
 #include <GLUT/glut.h>
 #include <GLUT/glut.h>
 #include <vector>
@@ -66,12 +66,11 @@ float h = 2.0/SCREEN_HEIGHT;
 float c = 1.0/255;
 bool up_pressed, down_pressed, left_pressed, right_pressed = false;
 
-
 void resetFrog(){
   // TODO: start frog at the bottom in the middle
-  frog=Rect(SCREEN_WIDTH/2,SCREEN_HEIGHT - 50,0,0*c,255*c,0*c,3,3);
+  frog.y = SCREEN_HEIGHT - 5 - RECT_HEIGHT;
+  frog.x = SCREEN_HEIGHT / 2 - RECT_HEIGHT / 2;
 }
-
 
 void init()
 {
@@ -107,12 +106,6 @@ void init()
   logs.push_back(LogGoal6);
 
   resetFrog();
-}
-
-void resetFrog(){
-  // TODO: start frog at the bottom in the middle
-  frog.y = SCREEN_HEIGHT - 5 - RECT_HEIGHT;
-  frog.x = SCREEN_HEIGHT / 2 - RECT_HEIGHT / 2;
 }
 
 bool frogOnLogs(){
@@ -151,20 +144,20 @@ void idlefunc() {
       frog.x += JUMP_DIST;
     }
 
-    // TODO: check if frog made it across
     if (frog.y<LANE_HEIGHT)
     { 
-      for (int n=0,n<logs.size(),n++)
+      for (int n=0;n<logs.size();n++)
     {
-      if (frog.collidesWith(log[n]))
+      if (frog.collidesWith(logs[n]))
      {
         logs[n].r=0;
         logs[n].g=255;
         logs[n].b=0;
-        resetFrog():
+        resetFrog();
      }
     }
     }
+
 
 
     // check if frog dies
@@ -204,7 +197,7 @@ void fillBackground(){
   glClear(GL_COLOR_BUFFER_BIT);
   // eventually have a road texture, water texture, etc
    // grass on top
-   glColor3f(0.0, 1.0, 0.0);
+   glColor3f(0.0, 153*c, 0.0);
    glBegin(GL_POLYGON);
      glVertex3f(-1.0, 1.0, 0.0);
      glVertex3f(-1.0, 1-LANE_HEIGHT*h, 0.0);
@@ -221,8 +214,8 @@ void fillBackground(){
      glVertex3f(1.0, 1-LANE_HEIGHT*h, 0.0);
    glEnd();
 
-   //middle water
-   glColor3f(0.0, 1.0, 0.0);
+   //middle grass
+   glColor3f(0.0, 153*c, 0.0);
    glBegin(GL_POLYGON);
      glVertex3f(-1.0, 1-5*LANE_HEIGHT*h, 0.0);
      glVertex3f(-1.0, 1-6*LANE_HEIGHT*h, 0.0);
@@ -254,7 +247,7 @@ void fillBackground(){
    glEnd();
 
    //grass on bottom
-   glColor3f(0.0, 1.0, 0.0);
+   glColor3f(0.0, 153*c, 0.0);
    glBegin(GL_POLYGON);
      glVertex3f(-1.0, -1.0, 0.0);
      glVertex3f(-1.0, -1+LANE_HEIGHT*h, 0.0);

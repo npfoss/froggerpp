@@ -80,6 +80,7 @@ void init()
     // x = various
     // y = r * LANE_HEIGHT + (LANE_HEIGHT - RECT_HEIGHT) / 2
 
+
   Rect Car0=Rect(SCREEN_WIDTH-30,SCREEN_HEIGHT*8/10+5,-5,244*c,208*c,63*c,RECT_HEIGHT,RECT_HEIGHT);
   Rect Car1=Rect(0,SCREEN_HEIGHT*7/10+5,6,155*c,89*c,182*c,3*RECT_HEIGHT,RECT_HEIGHT);
   Rect Car2=Rect(SCREEN_WIDTH-30,SCREEN_HEIGHT*6/10+5,-9,155*c,89*c,182*c,RECT_HEIGHT,RECT_HEIGHT);
@@ -91,6 +92,7 @@ void init()
   Rect Log0=Rect(SCREEN_WIDTH-30,SCREEN_HEIGHT*1/10+5,-5,204*c,233*c,82*c,3*RECT_HEIGHT,RECT_HEIGHT);
   Rect Log1=Rect(0,SCREEN_HEIGHT*2/10,7,204*c,233*c,82*c,LANE_HEIGHT*2,RECT_HEIGHT);
   Rect Log2=Rect(SCREEN_WIDTH-30,SCREEN_HEIGHT*3/10+5,-3,204*c,233*c,82*c,4*RECT_HEIGHT,RECT_HEIGHT);
+
   Rect Log3=Rect(0,SCREEN_HEIGHT*4/10,5,204*c,233*c,82*c,LANE_HEIGHT*3,RECT_HEIGHT);
 
   Rect LogGoal4=Rect(SCREEN_WIDTH*3/10,0,0,255*c,255*c,255*c,1.5*RECT_HEIGHT,RECT_HEIGHT);
@@ -222,12 +224,12 @@ void idlefunc() {
     {
       if (cars[n].dx<0&&cars[n].x<-cars[n].width)
       {
-         cout << "flag 1" << endl;
+         //cout << "flag 1" << endl;
         cars[n].x=SCREEN_WIDTH;
       }
       else if (cars[n].dx>0&&cars[n].x>=SCREEN_WIDTH)
       {
-                  cout << "flag 2" << endl;
+                 // cout << "flag 2" << endl;
         cars[n].x=-cars[n].width;
       }
     }
@@ -236,12 +238,12 @@ void idlefunc() {
     {
       if (logs[n].dx<0&&logs[n].x<-logs[n].width)
       {
-         cout << "flag 1" << endl;
+         //cout << "flag 1" << endl;
         logs[n].x=SCREEN_WIDTH;
       }
       else if (logs[n].dx>0&&logs[n].x>=SCREEN_WIDTH)
       {
-                  cout << "flag 2" << endl;
+             //     cout << "flag 2" << endl;
         logs[n].x=-logs[n].width;
       }
     }

@@ -147,7 +147,7 @@ void idlefunc() {
     }
 
     // TODO: check if frog made it across
-    if (frog.y=JUMP_DIST*9+SCREEN_HEIGHT*1/10&&frog.x=SCREEN_WIDTH*3/10)
+    if (collidesWith(frog,logs(4)))
     {
         logs(4).r=0;
         logs(4).g=255;
@@ -155,7 +155,7 @@ void idlefunc() {
         frog.x=SCREEN_WIDTH/2;
         frog.y=SCREEN_HEIGHT*1/10;
     }
-    if (frog.y=JUMP_DIST*9+SCREEN_HEIGHT*1/10&&frog.x=SCREEN_WIDTH*5/10)
+    if (collidesWith(frog,logs(5)))
     {
         logs(5).r=0;
         logs(5).g=255;
@@ -163,7 +163,7 @@ void idlefunc() {
         frog.x=SCREEN_WIDTH/2;
         frog.y=SCREEN_HEIGHT*1/10;
     }
-    if (frog.y=JUMP_DIST*9+SCREEN_HEIGHT*1/10&&frog.x=SCREEN_WIDTH*7/10)
+    if (collidesWith(frog,logs(6)))
     {
         logs(6).r=0;
         logs(6).g=255;

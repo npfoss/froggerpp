@@ -52,7 +52,7 @@ public:
   }
 
   bool collidesWith(Rect rect){
-    return (this->x + this->width < rect.x || this->y + this->height < rect.y || rect.x + rect.width < this->x || rect.y + rect.height < this->y)
+    return (this->x + this->width < rect.x || this->y + this->height < rect.y || rect.x + rect.width < this->x || rect.y + rect.height < this->y);
   }
 };
 
@@ -105,7 +105,17 @@ void init()
 
 void resetFrog(){
   // TODO: start frog at the bottom in the middle
-  frog=Rect(SCREEN_WIDTH/2,SCREEN_HEIGHT*1/10,0,0*c,255*c,0*c,LANE_HEIGHT/2,LANE_HEIGHT/2);
+  frog.y = SCREEN_HEIGHT - 5 - RECT_HEIGHT;
+  frog.x = SCREEN_HEIGHT / 2 - RECT_HEIGHT / 2;
+}
+
+bool frogOnLogs(){
+  for(auto car : logs){
+    if(frog.collidesWith(car)){
+      return true;
+    }
+  }
+  return false;
 }
 
 void idlefunc() {
@@ -161,16 +171,19 @@ void idlefunc() {
         frog.x=SCREEN_WIDTH/2;
         frog.y=SCREEN_HEIGHT*1/10;
     }
-    // check for collisions
-    for(auto car : cars){
-      if(frog.collidesWith(car)){
-        // ded
-        resetFrog();
-      }
-    }
 
-    for(auto car : logs){
-      if(frog.collidesWith(car)){
+    // check if frog dies
+    if(frog.x > 5*LANE_HEIGHT){
+      // watch out for cars
+      for(auto car : cars){
+        if(frog.collidesWith(car)){
+          // ded
+          resetFrog();
+        }
+      }
+    } else {
+      // make sure on logs
+      if(!frogOnLogs()){
         // ded
         resetFrog();
       }

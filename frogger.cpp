@@ -144,31 +144,21 @@ void idlefunc() {
       frog.x += JUMP_DIST;
     }
 
-    // TODO: check if frog made it across
-    // if (collidesWith(frog,logs[4]))
-    // {
-    //     logs[4].r=0;
-    //     logs[4].g=255;
-    //     logs[4].b=0;
-    //     frog.x=SCREEN_WIDTH/2;
-    //     frog.y=SCREEN_HEIGHT*1/10;
-    // }
-    // if (collidesWith(frog,logs[5]))
-    // {
-    //     logs[5].r=0;
-    //     logs[5].g=255;
-    //     logs[5].b=0;
-    //     frog.x=SCREEN_WIDTH/2;
-    //     frog.y=SCREEN_HEIGHT*1/10;
-    // }
-    // if (collidesWith(frog,logs[6]))
-    // {
-    //     logs[6].r=0;
-    //     logs[6].g=255;
-    //     logs[6].b=0;
-    //     frog.x=SCREEN_WIDTH/2;
-    //     frog.y=SCREEN_HEIGHT*1/10;
-    // }
+    if (frog.y<LANE_HEIGHT)
+    { 
+      for (int n=0;n<logs.size();n++)
+    {
+      if (frog.collidesWith(logs[n]))
+     {
+        logs[n].r=0;
+        logs[n].g=255;
+        logs[n].b=0;
+        resetFrog();
+     }
+    }
+    }
+
+
 
     // check if frog dies
     if(frog.x > 5*LANE_HEIGHT){

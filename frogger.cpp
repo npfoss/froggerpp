@@ -107,6 +107,8 @@ void init()
   logs.push_back(LogGoal5);
   logs.push_back(LogGoal6);
 
+  frog = Rect(0, 0, 0, 0, 255, 0, RECT_HEIGHT, RECT_HEIGHT);
+
   resetFrog();
 }
 
@@ -144,12 +146,6 @@ void keyupfunc(unsigned char key,int xscr,int yscr) {
    }
 }
 
-void resetFrog(){
-  // TODO: start frog at the bottom in the middle
-  frog.y = SCREEN_HEIGHT - 5 - RECT_HEIGHT;
-  frog.x = SCREEN_HEIGHT / 2 - RECT_HEIGHT / 2;
-}
-
 bool frogOnLogs(){
   for(auto car : logs){
     if(frog.collidesWith(car)){
@@ -161,7 +157,7 @@ bool frogOnLogs(){
 
 void idlefunc() {
   cnt++;
-  if (cnt == 1000) {
+  if (cnt == 10000) {
     cnt = 0;
 
     // move everything
@@ -218,7 +214,7 @@ void idlefunc() {
         resetFrog();
       }
     }
-    for (int n=0;n<cars.size;n++)
+    for (int n=0;n<cars.size();n++)
     {
       if (cars[n].dx<0&&cars[n].x<-cars[n].width)
       {
@@ -321,6 +317,14 @@ void displayMe(void)
          glVertex2f(alog.x*w, alog.y*h+alog.height*h);
       glEnd();
    }
+
+   glColor3f(frog.r, frog.g, frog.b);
+   glBegin(GL_POLYGON);
+      glVertex2f(frog.x*w, frog.y*h);
+      glVertex2f(frog.x*w+frog.width*w, frog.y*h);
+      glVertex2f(frog.x*w+frog.width*w, frog.y*h+frog.height*h);
+      glVertex2f(frog.x*w, frog.y*h+frog.height*h);
+   glEnd();   
 
    // always last
    glutSwapBuffers();

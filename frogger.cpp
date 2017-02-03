@@ -80,8 +80,6 @@ void init()
     // x = various
     // y = r * LANE_HEIGHT + (LANE_HEIGHT - RECT_HEIGHT) / 2
 
-
-
   Rect Car0=Rect(SCREEN_WIDTH-30,SCREEN_HEIGHT*8/10+5,-5,244*c,208*c,63*c,RECT_HEIGHT,RECT_HEIGHT);
   Rect Car1=Rect(0,SCREEN_HEIGHT*7/10+5,6,155*c,89*c,182*c,3*RECT_HEIGHT,RECT_HEIGHT);
   Rect Car2=Rect(SCREEN_WIDTH-30,SCREEN_HEIGHT*6/20+5,-9,155*c,89*c,182*c,RECT_HEIGHT,RECT_HEIGHT);
@@ -162,7 +160,7 @@ void idlefunc() {
 
     // move everything
     for(auto car : cars){
-      car.x = car.x + car.dx;
+      car.x = 200;//car.x + car.dx;
       // cout << "car at " << car.x << " " << car.y << endl;
     }
 

@@ -10,7 +10,7 @@
 8--------cars------------
 9--------grass-----------
 */
-//#include <iostream>
+#include <iostream>
 #include <GLUT/glut.h>
 #include <GLUT/glut.h>
 #include <vector>
@@ -182,28 +182,28 @@ void idlefunc() {
       frog.x += JUMP_DIST;
     }
 
+    // check win condition
     if (frog.y<LANE_HEIGHT)
     { 
       for (int n=0;n<logs.size();n++)
-    {
-      if (frog.collidesWith(logs[n]))
-     {
-        logs[n].r=0;
-        logs[n].g=255;
-        logs[n].b=0;
-        resetFrog();
-     }
+      {
+        if (frog.collidesWith(logs[n]))
+        {
+          logs[n].r=0;
+          logs[n].g=255;
+          logs[n].b=0;
+          resetFrog();
+        }
+      }
     }
-    }
-
-
 
     // check if frog dies
-    if(frog.x > 5*LANE_HEIGHT){
+    if(frog.y > 5*LANE_HEIGHT){
       // watch out for cars
       for(auto car : cars){
         if(frog.collidesWith(car)){
           // ded
+      cout << "here" << endl;
           resetFrog();
         }
       }
@@ -214,6 +214,8 @@ void idlefunc() {
         resetFrog();
       }
     }
+
+    // put offscreen cars back
     for (int n=0;n<cars.size();n++)
     {
       if (cars[n].dx<0&&cars[n].x<-cars[n].width)
@@ -225,7 +227,6 @@ void idlefunc() {
         cars[n].x=-cars[n].width;
       }
     }
-
 
     glutPostRedisplay();
   }
@@ -303,8 +304,8 @@ void displayMe(void)
       glBegin(GL_POLYGON);
          glVertex2f(car.x*w-1, 1-car.y*h);
          glVertex2f(car.x*w-1+car.width*w, 1-car.y*h);
-         glVertex2f(car.x*w-1+car.width*w, 1-car.y*h+car.height*h);
-         glVertex2f(car.x*w-1, 1-car.y*h+car.height*h);
+         glVertex2f(car.x*w-1+car.width*w, 1-(car.y*h+car.height*h));
+         glVertex2f(car.x*w-1, 1-(car.y*h+car.height*h));
       glEnd();
    }
 
@@ -313,8 +314,8 @@ void displayMe(void)
       glBegin(GL_POLYGON);
          glVertex2f(alog.x*w-1, 1-alog.y*h);
          glVertex2f(alog.x*w-1+alog.width*w, 1-alog.y*h);
-         glVertex2f(alog.x*w-1+alog.width*w, 1-alog.y*h+alog.height*h);
-         glVertex2f(alog.x*w-1, 1-alog.y*h+alog.height*h);
+         glVertex2f(alog.x*w-1+alog.width*w, 1-(alog.y*h+alog.height*h));
+         glVertex2f(alog.x*w-1, 1-(alog.y*h+alog.height*h));
       glEnd();
    }
 
@@ -322,8 +323,8 @@ void displayMe(void)
    glBegin(GL_POLYGON);
       glVertex2f(frog.x*w-1, 1-frog.y*h);
       glVertex2f(frog.x*w-1+frog.width*w, 1-frog.y*h);
-      glVertex2f(frog.x*w-1+frog.width*w, 1-frog.y*h+frog.height*h);
-      glVertex2f(frog.x*w-1, 1-frog.y*h+frog.height*h);
+      glVertex2f(frog.x*w-1+frog.width*w, 1-(frog.y*h+frog.height*h));
+      glVertex2f(frog.x*w-1, 1-(frog.y*h+frog.height*h));
    glEnd();   
 
    // always last

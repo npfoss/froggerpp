@@ -162,11 +162,11 @@ void idlefunc() {
 
     // move everything
     for(auto car : cars){
-      car.x += car.dx;
+      car.x = car.x + car.dx;
     }
 
-    for(auto car : logs){
-      car.x += car.dx;
+    for(auto loog : logs){
+      loog.x += loog.dx;
     }
 
     if (up_pressed){

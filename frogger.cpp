@@ -183,6 +183,18 @@ void idlefunc() {
         resetFrog();
       }
     }
+    for (int n=0;n<cars.size;n++)
+    {
+      if (cars[n].dx<0&&cars[n].x<-cars[n].width)
+      {
+        cars[n].x=SCREEN_WIDTH;
+      }
+      else if (cars[n].dx>0&&cars[n].x>=SCREEN_WIDTH)
+      {
+        cars[n].x=-cars[n].width;
+      }
+    }
+
 
     glutPostRedisplay();
   }

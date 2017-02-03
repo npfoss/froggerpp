@@ -30,6 +30,11 @@ public:
       this->width=width;
       this->height=height;
   }
+
+  bool collidesWith(Rect rect){
+
+    return false;
+  }
 };
 
 //Globals
@@ -73,11 +78,11 @@ void idlefunc() {
     red = red + .01;
 
     for(auto car : cars){
-      car->x = car->x + car->dx;
+      car.x += car.dx;
     }
 
     for(auto car : logs){
-      car->x = car->x + car->dx;
+      car.x += car.dx;
     }
 
 
@@ -86,9 +91,13 @@ void idlefunc() {
   }
 }
 
+void fillBackground(){
+  glClear(GL_COLOR_BUFFER_BIT);
+  // eventually have a road texture, water texture, etc
+}
 void displayMe(void)
 {
-   glClear(GL_COLOR_BUFFER_BIT);
+   fillBackground();
    glColor3f(red, 0.0, 0.0);
    for (auto car:cars) {
       glBegin(GL_POLYGON);
@@ -98,9 +107,9 @@ void displayMe(void)
          glVertex2f(car.x*w, car.y*h+car.height*h);
       glEnd();
    }
-   glutSwapBuffers();
 
-    
+   // always last
+   glutSwapBuffers();
 }
 
 int main(int argc, char** argv)

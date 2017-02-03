@@ -81,19 +81,31 @@ void init()
     // y = r * LANE_HEIGHT + (LANE_HEIGHT - RECT_HEIGHT) / 2
 
 
-  Rect Car0=Rect(SCREEN_WIDTH-30,SCREEN_HEIGHT*8/10+5,-5,244*c,208*c,63*c,RECT_HEIGHT,RECT_HEIGHT);
-  Rect Car1=Rect(0,SCREEN_HEIGHT*7/10+5,6,155*c,89*c,182*c,3*RECT_HEIGHT,RECT_HEIGHT);
-  Rect Car2=Rect(SCREEN_WIDTH-30,SCREEN_HEIGHT*6/10+5,-9,155*c,89*c,182*c,RECT_HEIGHT,RECT_HEIGHT);
+  Rect Car0=Rect(SCREEN_WIDTH-100,SCREEN_HEIGHT*8/10+5,-5,244*c,208*c,63*c,RECT_HEIGHT,RECT_HEIGHT);
+  Rect Car1=Rect(200,SCREEN_HEIGHT*7/10+5,6,155*c,89*c,182*c,3*RECT_HEIGHT,RECT_HEIGHT);
+  Rect Car2=Rect(SCREEN_WIDTH-100,SCREEN_HEIGHT*6/10+5,-9,240*c,8*c,240*c,RECT_HEIGHT,RECT_HEIGHT);
+   Rect Car3=Rect(SCREEN_WIDTH-30,SCREEN_HEIGHT*8/10+5,-5,244*c,208*c,63*c,RECT_HEIGHT,RECT_HEIGHT);
+  Rect Car4=Rect(0,SCREEN_HEIGHT*7/10+5,6,155*c,89*c,182*c,3*RECT_HEIGHT,RECT_HEIGHT);
+  Rect Car5=Rect(SCREEN_WIDTH-30,SCREEN_HEIGHT*6/10+5,-9,240*c,8*c,240*c,RECT_HEIGHT,RECT_HEIGHT);
+
 
   cars.push_back(Car0);
   cars.push_back(Car1);
   cars.push_back(Car2);
+   cars.push_back(Car3);
+  cars.push_back(Car4);
+  cars.push_back(Car5);
+
 
   Rect Log0=Rect(SCREEN_WIDTH-30,SCREEN_HEIGHT*1/10+5,-5,204*c,233*c,82*c,3*RECT_HEIGHT,RECT_HEIGHT);
   Rect Log1=Rect(0,SCREEN_HEIGHT*2/10,7,204*c,233*c,82*c,LANE_HEIGHT*2,RECT_HEIGHT);
   Rect Log2=Rect(SCREEN_WIDTH-30,SCREEN_HEIGHT*3/10+5,-3,204*c,233*c,82*c,4*RECT_HEIGHT,RECT_HEIGHT);
 
   Rect Log3=Rect(0,SCREEN_HEIGHT*4/10,5,204*c,233*c,82*c,LANE_HEIGHT*3,RECT_HEIGHT);
+  Rect Log7=Rect(SCREEN_WIDTH-100,SCREEN_HEIGHT*1/10+5,-5,204*c,233*c,82*c,3*RECT_HEIGHT,RECT_HEIGHT);
+  Rect Log8=Rect(100,SCREEN_HEIGHT*2/10,7,204*c,233*c,82*c,LANE_HEIGHT*2,RECT_HEIGHT);
+  Rect Log9=Rect(SCREEN_WIDTH-100,SCREEN_HEIGHT*3/10+5,-3,204*c,233*c,82*c,4*RECT_HEIGHT,RECT_HEIGHT);
+  Rect Log10=Rect(100,SCREEN_HEIGHT*4/10,5,204*c,233*c,82*c,LANE_HEIGHT*3,RECT_HEIGHT);
 
   Rect LogGoal4=Rect(SCREEN_WIDTH*3/10,0,0,255*c,255*c,255*c,1.5*RECT_HEIGHT,RECT_HEIGHT);
   Rect LogGoal5=Rect(SCREEN_WIDTH/2,0,0,255*c,255*c,255*c,1.5*RECT_HEIGHT,RECT_HEIGHT);
@@ -103,6 +115,10 @@ void init()
   logs.push_back(Log1);
   logs.push_back(Log2);
   logs.push_back(Log3);
+  logs.push_back(Log7);
+  logs.push_back(Log8);
+  logs.push_back(Log9);
+  logs.push_back(Log10);
   logs.push_back(LogGoal4);
   logs.push_back(LogGoal5);
   logs.push_back(LogGoal6);
@@ -149,6 +165,7 @@ void keyupfunc(unsigned char key,int xscr,int yscr) {
 bool frogOnLogs(){
   for(auto car : logs){
     if(frog.collidesWith(car)){
+      frog.x += car.dx;
       return true;
     }
   }

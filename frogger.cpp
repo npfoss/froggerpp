@@ -20,8 +20,8 @@ using namespace std;
 #define SCREEN_HEIGHT 400
 #define LANE_HEIGHT 40
 #define RECT_HEIGHT 30
-#define JUMP_DIST 5
 //#define DELAY_CNT 100000;
+#define JUMP_DIST 40
 
 class Rect
 {
@@ -81,29 +81,47 @@ void init()
 
 
 
-  Rect Car0=Rect(SCREEN_WIDTH/4,SCREEN_HEIGHT/4,5,244*c,208*c,63*c,4,RECT_HEIGHT);
-
-
-
-
-  Rect Car1=Rect(SCREEN_WIDTH/2,SCREEN_HEIGHT/2,8,155*c,89*c,182*c,4,4);
+  Rect Car0=Rect(SCREEN_WIDTH,SCREEN_HEIGHT*3/10,-5,244*c,208*c,63*c,LANE_HEIGHT,LANE_HEIGHT);
+  Rect Car1=Rect(0,SCREEN_HEIGHT*4/20,6,155*c,89*c,182*c,LANE_HEIGHT,LANE_HEIGHT);
+  Rect Car2=Rect(SCREEN_WIDTH,SCREEN_HEIGHT*5/20,-9,155*c,89*c,182*c,LANE_HEIGHT,LANE_HEIGHT);
 
   cars.push_back(Car0);
   cars.push_back(Car1);
+  cars.push_back(Car2);
 
-  Rect Log0=Rect(SCREEN_WIDTH/2,SCREEN_HEIGHT/4,5,255*c,248*c,220*c,10,3);
-  Rect Log1=Rect(SCREEN_WIDTH*3/4,SCREEN_HEIGHT/4,5,255*c,248*c,220*c,10,3);
-  Rect Log2=Rect(SCREEN_WIDTH/2,SCREEN_HEIGHT*3/4,5,255*c,248*c,220*c,10,3);
+  Rect Log0=Rect(SCREEN_WIDTH,SCREEN_HEIGHT*9/10,5,255*c,248*c,220*c,3*LANE_HEIGHT,LANE_HEIGHT);
+  Rect Log1=Rect(0,SCREEN_HEIGHT*8/10,5,255*c,248*c,220*c,LANE_HEIGHT,2*LANE_HEIGHT);
+  Rect Log2=Rect(SCREEN_WIDTH,SCREEN_HEIGHT*7/10,5,255*c,248*c,220*c,4*LANE_HEIGHT,LANE_HEIGHT);
+  Rect Log3=Rect(0,SCREEN_HEIGHT*6/10,5,255*c,248*c,220*c,LANE_HEIGHT,3*LANE_HEIGHT);
 
-  Rect LogGoal0=Rect(SCREEN_WIDTH,SCREEN_HEIGHT,0,255*c,255*c,255*c,4,4);
-  Rect LogGoal1=Rect(SCREEN_WIDTH,SCREEN_HEIGHT,0,255*c,255*c,255*c,4,4);
-  Rect LogGoal2=Rect(SCREEN_WIDTH,SCREEN_HEIGHT,0,255*c,255*c,255*c,4,4);
+  Rect LogGoal4=Rect(SCREEN_WIDTH*3/10,SCREEN_HEIGHT,0,255*c,255*c,255*c,1.5*LANE_HEIGHT,LANE_HEIGHT);
+  Rect LogGoal5=Rect(SCREEN_WIDTH/2,SCREEN_HEIGHT,0,255*c,255*c,255*c,1.5*LANE_HEIGHT,LANE_HEIGHT);
+  Rect LogGoal6=Rect(SCREEN_WIDTH*7/10,SCREEN_HEIGHT,0,255*c,255*c,255*c,1.5*LANE_HEIGHT,LANE_HEIGHT);
 
   logs.push_back(Log0);
   logs.push_back(Log1);
   logs.push_back(Log2);
+  logs.push_back(Log3);
+  logs.push_back(LogGoal4);
+  logs.push_back(LogGoal5);
+  logs.push_back(LogGoal6);
 
   resetFrog();
+}
+
+void resetFrog(){
+  // TODO: start frog at the bottom in the middle
+  frog.y = SCREEN_HEIGHT - 5 - RECT_HEIGHT;
+  frog.x = SCREEN_HEIGHT / 2 - RECT_HEIGHT / 2;
+}
+
+bool frogOnLogs(){
+  for(auto car : logs){
+    if(frog.collidesWith(car)){
+      return true;
+    }
+  }
+  return false;
 }
 
 void idlefunc() {
@@ -134,18 +152,43 @@ void idlefunc() {
     }
 
     // TODO: check if frog made it across
-
-
-    // check for collisions
-    for(auto car : cars){
-      if(frog.collidesWith(car)){
-        // ded
-        resetFrog();
-      }
+    if (collidesWith(frog,logs(4)))
+    {
+        logs(4).r=0;
+        logs(4).g=255;
+        logs(4).b=0;
+        frog.x=SCREEN_WIDTH/2;
+        frog.y=SCREEN_HEIGHT*1/10;
+    }
+    if (collidesWith(frog,logs(5)))
+    {
+        logs(5).r=0;
+        logs(5).g=255;
+        logs(5).b=0;
+        frog.x=SCREEN_WIDTH/2;
+        frog.y=SCREEN_HEIGHT*1/10;
+    }
+    if (collidesWith(frog,logs(6)))
+    {
+        logs(6).r=0;
+        logs(6).g=255;
+        logs(6).b=0;
+        frog.x=SCREEN_WIDTH/2;
+        frog.y=SCREEN_HEIGHT*1/10;
     }
 
-    for(auto car : logs){
-      if(frog.collidesWith(car)){
+    // check if frog dies
+    if(frog.x > 5*LANE_HEIGHT){
+      // watch out for cars
+      for(auto car : cars){
+        if(frog.collidesWith(car)){
+          // ded
+          resetFrog();
+        }
+      }
+    } else {
+      // make sure on logs
+      if(!frogOnLogs()){
         // ded
         resetFrog();
       }

@@ -163,11 +163,15 @@ void idlefunc() {
     // move everything
     for(auto car : cars){
       car.x += car.dx;
+      cout << "car at " << car.x << " " << car.y << endl;
     }
 
     for(auto car : logs){
       car.x += car.dx;
+      cout << "log at " << car.x << " " << car.y << endl;
     }
+
+      cout << "frog at " << frog.x << " " << frog.y << endl;
 
     if (up_pressed){
       frog.y -= JUMP_DIST;

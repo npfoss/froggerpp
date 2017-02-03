@@ -303,8 +303,8 @@ void displayMe(void)
       glBegin(GL_POLYGON);
          glVertex2f(car.x*w-1, 1-car.y*h);
          glVertex2f(car.x*w-1+car.width*w, 1-car.y*h);
-         glVertex2f(car.x*w-1+car.width*w, 1-car.y*h+car.height*h);
-         glVertex2f(car.x*w-1, 1-car.y*h+car.height*h);
+         glVertex2f(car.x*w-1+car.width*w, 1-(car.y*h+car.height*h));
+         glVertex2f(car.x*w-1, 1-(car.y*h+car.height*h));
       glEnd();
    }
 
@@ -313,8 +313,8 @@ void displayMe(void)
       glBegin(GL_POLYGON);
          glVertex2f(alog.x*w-1, 1-alog.y*h);
          glVertex2f(alog.x*w-1+alog.width*w, 1-alog.y*h);
-         glVertex2f(alog.x*w-1+alog.width*w, 1-alog.y*h+alog.height*h);
-         glVertex2f(alog.x*w-1, 1-alog.y*h+alog.height*h);
+         glVertex2f(alog.x*w-1+alog.width*w, 1-(alog.y*h+alog.height*h));
+         glVertex2f(alog.x*w-1, 1-(alog.y*h+alog.height*h));
       glEnd();
    }
 
@@ -322,8 +322,8 @@ void displayMe(void)
    glBegin(GL_POLYGON);
       glVertex2f(frog.x*w-1, 1-frog.y*h);
       glVertex2f(frog.x*w-1+frog.width*w, 1-frog.y*h);
-      glVertex2f(frog.x*w-1+frog.width*w, 1-frog.y*h+frog.height*h);
-      glVertex2f(frog.x*w-1, 1-frog.y*h+frog.height*h);
+      glVertex2f(frog.x*w-1+frog.width*w, 1-(frog.y*h+frog.height*h));
+      glVertex2f(frog.x*w-1, 1-(frog.y*h+frog.height*h));
    glEnd();   
 
    // always last

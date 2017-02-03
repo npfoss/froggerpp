@@ -182,24 +182,23 @@ void idlefunc() {
       frog.x += JUMP_DIST;
     }
 
+    // check win condition
     if (frog.y<LANE_HEIGHT)
     { 
       for (int n=0;n<logs.size();n++)
-    {
-      if (frog.collidesWith(logs[n]))
-     {
-        logs[n].r=0;
-        logs[n].g=255;
-        logs[n].b=0;
-        resetFrog();
-     }
+      {
+        if (frog.collidesWith(logs[n]))
+        {
+          logs[n].r=0;
+          logs[n].g=255;
+          logs[n].b=0;
+          resetFrog();
+        }
+      }
     }
-    }
-
-
 
     // check if frog dies
-    if(frog.x > 5*LANE_HEIGHT){
+    if(frog.y > 5*LANE_HEIGHT){
       // watch out for cars
       for(auto car : cars){
         if(frog.collidesWith(car)){
@@ -214,18 +213,19 @@ void idlefunc() {
         resetFrog();
       }
     }
-    for (int n=0;n<cars.size();n++)
-    {
-      if (cars[n].dx<0&&cars[n].x<-cars[n].width)
-      {
-        cars[n].x=SCREEN_WIDTH;
-      }
-      else if (cars[n].dx>0&&cars[n].x>=SCREEN_WIDTH)
-      {
-        cars[n].x=-cars[n].width;
-      }
-    }
 
+    // put offscreen cars back
+    // for (int n=0;n<cars.size();n++)
+    // {
+    //   if (cars[n].dx<0&&cars[n].x<-cars[n].width)
+    //   {
+    //     cars[n].x=SCREEN_WIDTH;
+    //   }
+    //   else if (cars[n].dx>0&&cars[n].x>=SCREEN_WIDTH)
+    //   {
+    //     cars[n].x=-cars[n].width;
+    //   }
+    // }
 
     glutPostRedisplay();
   }

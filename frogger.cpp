@@ -64,6 +64,8 @@ int cnt = 0;
 float w = 2.0/SCREEN_WIDTH;
 float h = 2.0/SCREEN_HEIGHT;
 float c = 1.0/255;
+char key_press;
+int ascii_value;
 bool up_pressed, down_pressed, left_pressed, right_pressed = false;
 
 void resetFrog(){
@@ -105,7 +107,43 @@ void init()
   logs.push_back(LogGoal5);
   logs.push_back(LogGoal6);
 
+  frog = Rect(0, 0, 0, 0, 255, 0, RECT_HEIGHT, RECT_HEIGHT);
+
   resetFrog();
+}
+
+void keyfunc(unsigned char key,int xscr,int yscr) {
+   switch(key){
+      case 'w':
+         up_pressed =  true;
+         break;
+      case 's':
+         down_pressed =  true;
+         break;
+      case 'a':
+        left_pressed = true;
+        break;
+      case 'd':
+        right_pressed = true;
+        break;
+   }
+}
+
+void keyupfunc(unsigned char key,int xscr,int yscr) {
+   switch(key){
+      case 'w':
+         up_pressed =  false;
+         break;
+      case 's':
+         down_pressed = false;
+         break;
+      case 'a':
+        left_pressed = false;
+        break;
+      case 'd':
+        right_pressed = false;
+        break;
+   }
 }
 
 bool frogOnLogs(){
@@ -119,7 +157,7 @@ bool frogOnLogs(){
 
 void idlefunc() {
   cnt++;
-  if (cnt == 1000) {
+  if (cnt == 10000) {
     cnt = 0;
 
     // move everything
@@ -176,7 +214,7 @@ void idlefunc() {
         resetFrog();
       }
     }
-    for (int n=0;n<cars.size;n++)
+    for (int n=0;n<cars.size();n++)
     {
       if (cars[n].dx<0&&cars[n].x<-cars[n].width)
       {
@@ -263,22 +301,30 @@ void displayMe(void)
    for (auto car:cars) {
       glColor3f(car.r, car.g, car.b);
       glBegin(GL_POLYGON);
-         glVertex2f(car.x*w, car.y*h);
-         glVertex2f(car.x*w+car.width*w, car.y*h);
-         glVertex2f(car.x*w+car.width*w, car.y*h+car.height*h);
-         glVertex2f(car.x*w, car.y*h+car.height*h);
+         glVertex2f(car.x*w-1, 1-car.y*h);
+         glVertex2f(car.x*w-1+car.width*w, 1-car.y*h);
+         glVertex2f(car.x*w-1+car.width*w, 1-car.y*h+car.height*h);
+         glVertex2f(car.x*w-1, 1-car.y*h+car.height*h);
       glEnd();
    }
 
    for (auto alog:logs) {
       glColor3f(alog.r, alog.g, alog.b);
       glBegin(GL_POLYGON);
-         glVertex2f(alog.x*w, alog.y*h);
-         glVertex2f(alog.x*w+alog.width*w, alog.y*h);
-         glVertex2f(alog.x*w+alog.width*w, alog.y*h+alog.height*h);
-         glVertex2f(alog.x*w, alog.y*h+alog.height*h);
+         glVertex2f(alog.x*w-1, 1-alog.y*h);
+         glVertex2f(alog.x*w-1+alog.width*w, 1-alog.y*h);
+         glVertex2f(alog.x*w-1+alog.width*w, 1-alog.y*h+alog.height*h);
+         glVertex2f(alog.x*w-1, 1-alog.y*h+alog.height*h);
       glEnd();
    }
+
+   glColor3f(frog.r, frog.g, frog.b);
+   glBegin(GL_POLYGON);
+      glVertex2f(frog.x*w-1, 1-frog.y*h);
+      glVertex2f(frog.x*w-1+frog.width*w, 1-frog.y*h);
+      glVertex2f(frog.x*w-1+frog.width*w, 1-frog.y*h+frog.height*h);
+      glVertex2f(frog.x*w-1, 1-frog.y*h+frog.height*h);
+   glEnd();   
 
    // always last
    glutSwapBuffers();
@@ -294,6 +340,8 @@ int main(int argc, char** argv)
     glutCreateWindow("Frogger :D");
     glutDisplayFunc(displayMe);
     glutIdleFunc(idlefunc);
+    glutKeyboardFunc(keyfunc);
+    glutKeyboardUpFunc(keyupfunc);
     glutMainLoop();
     return 0;
 }

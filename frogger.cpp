@@ -150,6 +150,7 @@ void keyupfunc(unsigned char key,int xscr,int yscr) {
 bool frogOnLogs(){
   for(auto car : logs){
     if(frog.collidesWith(car)){
+      frog.x += car.dx;
       return true;
     }
   }

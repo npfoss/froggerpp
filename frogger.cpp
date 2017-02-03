@@ -301,29 +301,29 @@ void displayMe(void)
    for (auto car:cars) {
       glColor3f(car.r, car.g, car.b);
       glBegin(GL_POLYGON);
-         glVertex2f(car.x*w, car.y*h);
-         glVertex2f(car.x*w+car.width*w, car.y*h);
-         glVertex2f(car.x*w+car.width*w, car.y*h+car.height*h);
-         glVertex2f(car.x*w, car.y*h+car.height*h);
+         glVertex2f(car.x*w-1, 1-car.y*h);
+         glVertex2f(car.x*w-1+car.width*w, 1-car.y*h);
+         glVertex2f(car.x*w-1+car.width*w, 1-car.y*h+car.height*h);
+         glVertex2f(car.x*w-1, 1-car.y*h+car.height*h);
       glEnd();
    }
 
    for (auto alog:logs) {
       glColor3f(alog.r, alog.g, alog.b);
       glBegin(GL_POLYGON);
-         glVertex2f(alog.x*w, alog.y*h);
-         glVertex2f(alog.x*w+alog.width*w, alog.y*h);
-         glVertex2f(alog.x*w+alog.width*w, alog.y*h+alog.height*h);
-         glVertex2f(alog.x*w, alog.y*h+alog.height*h);
+         glVertex2f(alog.x*w-1, 1-alog.y*h);
+         glVertex2f(alog.x*w-1+alog.width*w, 1-alog.y*h);
+         glVertex2f(alog.x*w-1+alog.width*w, 1-alog.y*h+alog.height*h);
+         glVertex2f(alog.x*w-1, 1-alog.y*h+alog.height*h);
       glEnd();
    }
 
    glColor3f(frog.r, frog.g, frog.b);
    glBegin(GL_POLYGON);
-      glVertex2f(frog.x*w, frog.y*h);
-      glVertex2f(frog.x*w+frog.width*w, frog.y*h);
-      glVertex2f(frog.x*w+frog.width*w, frog.y*h+frog.height*h);
-      glVertex2f(frog.x*w, frog.y*h+frog.height*h);
+      glVertex2f(frog.x*w-1, 1-frog.y*h);
+      glVertex2f(frog.x*w-1+frog.width*w, 1-frog.y*h);
+      glVertex2f(frog.x*w-1+frog.width*w, 1-frog.y*h+frog.height*h);
+      glVertex2f(frog.x*w-1, 1-frog.y*h+frog.height*h);
    glEnd();   
 
    // always last

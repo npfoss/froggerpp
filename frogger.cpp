@@ -10,7 +10,7 @@
 8--------cars------------
 9--------grass-----------
 */
-//#include <iostream>
+#include <iostream>
 #include <GLUT/glut.h>
 #include <GLUT/glut.h>
 #include <vector>
@@ -203,6 +203,7 @@ void idlefunc() {
       for(auto car : cars){
         if(frog.collidesWith(car)){
           // ded
+      cout << "here" << endl;
           resetFrog();
         }
       }
@@ -215,17 +216,17 @@ void idlefunc() {
     }
 
     // put offscreen cars back
-    // for (int n=0;n<cars.size();n++)
-    // {
-    //   if (cars[n].dx<0&&cars[n].x<-cars[n].width)
-    //   {
-    //     cars[n].x=SCREEN_WIDTH;
-    //   }
-    //   else if (cars[n].dx>0&&cars[n].x>=SCREEN_WIDTH)
-    //   {
-    //     cars[n].x=-cars[n].width;
-    //   }
-    // }
+    for (int n=0;n<cars.size();n++)
+    {
+      if (cars[n].dx<0&&cars[n].x<-cars[n].width)
+      {
+        cars[n].x=SCREEN_WIDTH;
+      }
+      else if (cars[n].dx>0&&cars[n].x>=SCREEN_WIDTH)
+      {
+        cars[n].x=-cars[n].width;
+      }
+    }
 
     glutPostRedisplay();
   }

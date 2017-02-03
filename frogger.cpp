@@ -10,7 +10,7 @@
 8--------cars------------
 9--------grass-----------
 */
-
+#include <iostream>
 #include <GLUT/glut.h>
 #include <GLUT/glut.h>
 #include <vector>
@@ -21,7 +21,7 @@ using namespace std;
 #define LANE_HEIGHT 40
 #define RECT_HEIGHT 30
 #define JUMP_DIST 5
-#define DELAY 100000;
+//#define DELAY_CNT 100000;
 
 class Rect
 {
@@ -52,7 +52,7 @@ public:
   }
 
   bool collidesWith(Rect rect){
-    return (this->x + this->width < rect.x || this->y + this->height < rect.y || rect.x + rect.width < this->x || rect.y + rect.height < this->y)
+    return (this->x + this->width < rect.x || this->y + this->height < rect.y || rect.x + rect.width < this->x || rect.y + rect.height < this->y);
   }
 };
 
@@ -60,12 +60,18 @@ public:
 vector <Rect> cars;
 vector <Rect> logs;
 Rect frog;
-int count = 0;
-float red = 0;
-float w = 1.0/SCREEN_WIDTH;
-float h = 1.0/SCREEN_HEIGHT;
+int cnt = 0;
+float w = 2.0/SCREEN_WIDTH;
+float h = 2.0/SCREEN_HEIGHT;
 float c = 1.0/255;
 bool up_pressed, down_pressed, left_pressed, right_pressed = false;
+
+
+void resetFrog(){
+  // TODO: start frog at the bottom in the middle
+  frog=Rect(SCREEN_WIDTH/2,SCREEN_HEIGHT - 50,0,0*c,255*c,0*c,3,3);
+}
+
 
 void init()
 {
@@ -100,16 +106,10 @@ void init()
   resetFrog();
 }
 
-void resetFrog(){
-  // TODO: start frog at the bottom in the middle
-  frog=Rect(SCREEN_WIDTH/2,SCREEN_HEIGHT - 50,0,0*c,255*c,0*c,3,3);
-}
-
 void idlefunc() {
-  count++;
-  if (count == DELAY) {
-    count = 0;
-    red = red + .01;
+  cnt++;
+  if (cnt == 1000) {
+    cnt = 0;
 
     // move everything
     for(auto car : cars){
@@ -158,12 +158,72 @@ void idlefunc() {
 void fillBackground(){
   glClear(GL_COLOR_BUFFER_BIT);
   // eventually have a road texture, water texture, etc
+   // grass on top
+   glColor3f(0.0, 1.0, 0.0);
+   glBegin(GL_POLYGON);
+     glVertex3f(-1.0, 1.0, 0.0);
+     glVertex3f(-1.0, 1-LANE_HEIGHT*h, 0.0);
+     glVertex3f(1.0,1-LANE_HEIGHT*h, 0.0);
+     glVertex3f(1.0, 1.0, 0.0);
+   glEnd();
+
+   //water
+   glColor3f(0.0, 0.0, 1.0);
+   glBegin(GL_POLYGON);
+     glVertex3f(-1.0, 1-LANE_HEIGHT*h, 0.0);
+     glVertex3f(-1.0, 1-5*LANE_HEIGHT*h, 0.0);
+     glVertex3f(1.0,1-5*LANE_HEIGHT*h, 0.0);
+     glVertex3f(1.0, 1-LANE_HEIGHT*h, 0.0);
+   glEnd();
+
+   //middle water
+   glColor3f(0.0, 1.0, 0.0);
+   glBegin(GL_POLYGON);
+     glVertex3f(-1.0, 1-5*LANE_HEIGHT*h, 0.0);
+     glVertex3f(-1.0, 1-6*LANE_HEIGHT*h, 0.0);
+     glVertex3f(1.0,1-6*LANE_HEIGHT*h, 0.0);
+     glVertex3f(1.0, 1-5*LANE_HEIGHT*h, 0.0);
+   glEnd();
+
+   //road lines
+   glColor3f(1.0, 1.0, 0.0);
+   glBegin(GL_POLYGON);
+     glVertex3f(-1.0, 1.005-7*LANE_HEIGHT*h, 0.0);
+     glVertex3f(-1.0, 0.995-7*LANE_HEIGHT*h, 0.0);
+     glVertex3f(1.0, 0.995-7*LANE_HEIGHT*h, 0.0);
+     glVertex3f(1.0, 1.005-7*LANE_HEIGHT*h, 0.0);
+   glEnd();
+   glColor3f(1.0, 1.0, 0.0);
+   glBegin(GL_POLYGON);
+     glVertex3f(-1.0, 1.005-8*LANE_HEIGHT*h, 0.0);
+     glVertex3f(-1.0, 0.995-8*LANE_HEIGHT*h, 0.0);
+     glVertex3f(1.0, 0.995-8*LANE_HEIGHT*h, 0.0);
+     glVertex3f(1.0, 1.005-8*LANE_HEIGHT*h, 0.0);
+   glEnd();
+   glColor3f(1.0, 1.0, 0.0);
+   glBegin(GL_POLYGON);
+     glVertex3f(-1.0, 1.005-8*LANE_HEIGHT*h, 0.0);
+     glVertex3f(-1.0, 0.995-8*LANE_HEIGHT*h, 0.0);
+     glVertex3f(1.0, 0.995-8*LANE_HEIGHT*h, 0.0);
+     glVertex3f(1.0, 1.005-8*LANE_HEIGHT*h, 0.0);
+   glEnd();
+
+   //grass on bottom
+   glColor3f(0.0, 1.0, 0.0);
+   glBegin(GL_POLYGON);
+     glVertex3f(-1.0, -1.0, 0.0);
+     glVertex3f(-1.0, -1+LANE_HEIGHT*h, 0.0);
+     glVertex3f(1.0,-1+LANE_HEIGHT*h, 0.0);
+     glVertex3f(1.0, -1.0, 0.0);
+   glEnd();   
 }
+
 void displayMe(void)
 {
    fillBackground();
-   glColor3f(red, 0.0, 0.0);
+   
    for (auto car:cars) {
+      glColor3f(car.r, car.g, car.b);
       glBegin(GL_POLYGON);
          glVertex2f(car.x*w, car.y*h);
          glVertex2f(car.x*w+car.width*w, car.y*h);
@@ -172,12 +232,22 @@ void displayMe(void)
       glEnd();
    }
 
+   for (auto alog:logs) {
+      glColor3f(alog.r, alog.g, alog.b);
+      glBegin(GL_POLYGON);
+         glVertex2f(alog.x*w, alog.y*h);
+         glVertex2f(alog.x*w+alog.width*w, alog.y*h);
+         glVertex2f(alog.x*w+alog.width*w, alog.y*h+alog.height*h);
+         glVertex2f(alog.x*w, alog.y*h+alog.height*h);
+      glEnd();
+   }
+
    // always last
    glutSwapBuffers();
 }
 
 int main(int argc, char** argv)
-{
+{   
     init();
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
